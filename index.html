@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Block Mods</title>
   <style>
-    /* 🧱 Підключення локального Minecraft-подібного шрифту */
     @font-face {
       font-family: 'PressStart2P';
-      src: url('fonts/PressStart2P.ttf') format('ttf');
+      src: url('fonts/PressStart2P.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
@@ -64,6 +63,7 @@
       height: 40px;
       object-fit: cover;
       border: 1px solid #888;
+      pointer-events: none;
     }
 
     .mod-item input[type="checkbox"] {
@@ -174,10 +174,22 @@
     const main = document.getElementById("main");
     const cta = document.getElementById("cta");
 
+    // Активувати кнопку, якщо хоч щось вибране
     checkboxes.forEach(cb => {
       cb.addEventListener("change", () => {
         const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
         installBtn.disabled = !anyChecked;
+      });
+    });
+
+    // Клік по всій картці мода
+    document.querySelectorAll('.mod-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        if (e.target !== checkbox) {
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
       });
     });
 
