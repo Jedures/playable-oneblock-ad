@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Block Mods</title>
   <style>
+    /* 🧱 Підключення локального Minecraft-подібного шрифту */
+    @font-face {
+      font-family: 'PressStart2P';
+      src: url('fonts/PressStart2P.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: 'PressStart2P', sans-serif;
       background: url('images/background.png') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
@@ -26,7 +34,7 @@
 
     h1 {
       color: #00ff00;
-      font-size: 18px;
+      font-size: 14px;
       margin-bottom: 20px;
       text-shadow: 1px 1px #000;
     }
@@ -68,7 +76,7 @@
     .mod-item label {
       flex-grow: 1;
       text-align: left;
-      font-size: 12px;
+      font-size: 10px;
       color: #fff;
       cursor: pointer;
     }
@@ -78,10 +86,10 @@
       background: #00aa00;
       border: 2px solid #003300;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 10px;
       color: white;
       cursor: pointer;
-      font-weight: bold;
+      text-transform: uppercase;
     }
 
     .button:disabled {
