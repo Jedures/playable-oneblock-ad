@@ -17,11 +17,15 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      height: auto;
       font-family: 'PressStart2P', sans-serif;
       background-size: cover;
       color: #fff;
       text-align: center;
       overflow-x: hidden;
+      overflow-y: scroll;
+      /* ← примусовий скрол */
+      -webkit-overflow-scrolling: touch;
     }
 
     body {
@@ -40,12 +44,8 @@
 
 
     .overlay {
-      padding: 20px;
       display: block;
-      /* або flex тільки якщо не ламає скрол */
       width: 100%;
-      min-height: auto;
-      box-sizing: border-box;
     }
 
     h1 {
@@ -61,10 +61,9 @@
     .mod-list {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-bottom: 30px;
-      width: 90%;
-      max-width: 320px;
+      align-items: center;
+      /* ← Центрує моди */
+      gap: 12px;
     }
 
     .mod-item {
