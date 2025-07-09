@@ -52,6 +52,7 @@
       text-shadow: 1px 1px #000;
       height: auto;
       min-height: 100%;
+      text-align: center;
       box-sizing: border-box;
     }
 
@@ -67,20 +68,26 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      gap: 10px;
       width: 90%;
       max-width: 320px;
       background: rgba(0, 0, 0, 0.6);
-      padding: 10px;
+      padding: 12px;
       border: 2px solid #555;
       border-radius: 8px;
       box-sizing: border-box;
     }
 
+    .mod-item img {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
     .mod-item label {
-      flex-grow: 1;
+      flex: 1;
       text-align: left;
       font-size: 10px;
-      color: #fff;
       pointer-events: none;
     }
 
@@ -97,17 +104,23 @@
     }
 
     .button {
-      padding: 12px 24px;
-      background: #0a0;
-      border: 2px solid #030;
-      border-radius: 6px;
+      display: inline-block;
+      margin: 20px auto;
       font-family: 'PressStart2P', sans-serif;
       font-size: 10px;
-      color: #fff;
+      padding: 12px 24px;
+      background: #00aa00;
+      border: 2px solid #003300;
+      border-radius: 6px;
+      color: white;
       cursor: pointer;
       text-transform: uppercase;
-      margin-top: 20px;
-      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .overlay,
+    .wrapper {
+      text-align: center;
     }
 
     .button:disabled {
