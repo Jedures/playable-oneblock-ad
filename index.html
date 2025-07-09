@@ -3,47 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minecraft Mods Playable</title>
+  <title>One Block Mods</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      background: url('https://i.imgur.com/o5uMfKo.png') repeat;
+      background: url('https://i.imgur.com/CocF6bP.png') repeat; /* One Block style background */
       font-family: 'Press Start 2P', cursive;
       color: #fff;
       text-align: center;
     }
 
-    .container {
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
-      margin-bottom: 10px;
-      font-size: 16px;
       color: #00ff00;
+      font-size: 16px;
+      margin-bottom: 20px;
       text-shadow: 1px 1px #000;
     }
 
     .mod-list {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 15px;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 320px;
     }
 
     .mod-item {
-      background: #333 url('https://i.imgur.com/nW8h20v.png') repeat;
-      padding: 10px;
-      width: 90%;
-      max-width: 300px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 15px;
       border: 2px solid #555;
       border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 0 5px #000;
+      gap: 12px;
+      cursor: pointer;
     }
 
     .mod-item img {
@@ -53,20 +57,31 @@
       border: 1px solid #888;
     }
 
+    .mod-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #00ff00;
+      cursor: pointer;
+    }
+
     .mod-item label {
       flex-grow: 1;
       text-align: left;
+      font-size: 10px;
+      color: #fff;
+      cursor: pointer;
     }
 
     .button {
       padding: 12px 24px;
       background: #00aa00;
-      border: 3px solid #003300;
-      border-radius: 4px;
-      font-size: 14px;
+      border: 2px solid #003300;
+      border-radius: 6px;
+      font-size: 12px;
       color: white;
       cursor: pointer;
-      box-shadow: inset -2px -2px 0 #003300;
+      font-family: 'Press Start 2P', cursive;
+      text-transform: uppercase;
     }
 
     .button:disabled {
@@ -88,6 +103,8 @@
       background: #000;
       border: 2px solid #555;
       margin-top: 20px;
+      border-radius: 5px;
+      overflow: hidden;
     }
 
     .progress {
@@ -101,36 +118,40 @@
       display: none;
       margin-top: 30px;
       background: #ff0000;
-      border: 3px solid #660000;
+      border: 2px solid #660000;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main">
+  <div class="overlay" id="main">
     <h1>Select Your Mods</h1>
     <div class="mod-list">
       <div class="mod-item">
+        <input type="checkbox" id="mod1" />
         <img src="https://i.imgur.com/yZ8zACy.png" alt="One Block">
-        <label><input type="checkbox" /> One Block</label>
+        <label for="mod1">One Block</label>
       </div>
       <div class="mod-item">
+        <input type="checkbox" id="mod2" />
         <img src="https://i.imgur.com/1UrU9R1.png" alt="Lucky Block">
-        <label><input type="checkbox" /> Lucky Block</label>
+        <label for="mod2">Lucky Block</label>
       </div>
       <div class="mod-item">
+        <input type="checkbox" id="mod3" />
         <img src="https://i.imgur.com/MP3gXuE.png" alt="SkyBlock">
-        <label><input type="checkbox" /> SkyBlock</label>
+        <label for="mod3">SkyBlock</label>
       </div>
       <div class="mod-item">
+        <input type="checkbox" id="mod4" />
         <img src="https://i.imgur.com/SUelL7k.png" alt="Furniture Mod">
-        <label><input type="checkbox" /> Furniture Mod</label>
+        <label for="mod4">Furniture Mod</label>
       </div>
     </div>
     <button class="button" id="installBtn" disabled>Install</button>
   </div>
 
-  <div id="loading">
-    <h2 style="color: #00ff00;">Installing...</h2>
+  <div class="overlay" id="loading">
+    <h1>Installing...</h1>
     <div class="bar">
       <div class="progress" id="progressBar"></div>
     </div>
@@ -158,7 +179,6 @@
       setTimeout(() => {
         progressBar.style.width = "100%";
       }, 100);
-
       setTimeout(() => {
         cta.style.display = "inline-block";
       }, 2000);
