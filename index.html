@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mods Playable</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #111;
+      color: white;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .mod-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .mod-item {
+      background: #222;
+      margin: 5px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      width: 80%;
+      text-align: left;
+    }
+    .button {
+      padding: 12px 24px;
+      background: #00c853;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+    #loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+    .bar {
+      width: 80%;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #00c853;
+      transition: width 2s linear;
+    }
+    #cta {
+      display: none;
+      margin-top: 30px;
+      background: #ff3b3b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main">
+    <h1>Select Mods</h1>
+    <div class="mod-list">
+      <label class="mod-item"><input type="checkbox" /> One Block</label>
+      <label class="mod-item"><input type="checkbox" /> Lucky Block</label>
+      <label class="mod-item"><input type="checkbox" /> SkyBlock</label>
+      <label class="mod-item"><input type="checkbox" /> Furniture Mod</label>
+    </div>
+    <button class="button" id="installBtn" disabled>Install</button>
+  </div>
+
+  <div id="loading">
+    <h2>Installing Mods...</h2>
+    <div class="bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+    <button class="button" id="cta">Open in Minecraft</button>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const installBtn = document.getElementById("installBtn");
+    const progressBar = document.getElementById("progressBar");
+    const loading = document.getElementById("loading");
+    const main = document.getElementById("main");
+    const cta = document.getElementById("cta");
+
+    // Enable install button only if at least one mod selected
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", () => {
+        const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        installBtn.disabled = !anyChecked;
+      });
+    });
+
+    installBtn.addEventListener("click", () => {
+      main.style.display = "none";
+      loading.style.display = "flex";
+      // Trigger animation
+      setTimeout(() => {
+        progressBar.style.width = "100%";
+      }, 100);
+
+      setTimeout(() => {
+        cta.style.display = "inline-block";
+      }, 2000);
+    });
+
+    cta.addEventListener("click", () => {
+      window.open("https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock", "_blank");
+    });
+  </script>
+</body>
+</html>
