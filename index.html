@@ -4,13 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One Block Mods</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    body {
+    @font-face {
+      font-family: 'PressStart2P';
+      src: url('fonts/PressStart2P.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
       margin: 0;
-      background: url('https://i.imgur.com/CocF6bP.png') repeat; /* One Block style background */
-      font-family: 'Press Start 2P', cursive;
+      padding: 0;
+      font-family: 'PressStart2P', sans-serif;
       color: #fff;
+      background: url('images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
       text-align: center;
     }
 
@@ -80,7 +88,7 @@
       font-size: 12px;
       color: white;
       cursor: pointer;
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'PressStart2P', cursive;
       text-transform: uppercase;
     }
 
@@ -128,22 +136,22 @@
     <div class="mod-list">
       <div class="mod-item">
         <input type="checkbox" id="mod1" />
-        <img src="https://i.imgur.com/yZ8zACy.png" alt="One Block">
+        <img src="images/oneblock.png" alt="One Block">
         <label for="mod1">One Block</label>
       </div>
       <div class="mod-item">
         <input type="checkbox" id="mod2" />
-        <img src="https://i.imgur.com/1UrU9R1.png" alt="Lucky Block">
+        <img src="images/luckyblock.png" alt="Lucky Block">
         <label for="mod2">Lucky Block</label>
       </div>
       <div class="mod-item">
         <input type="checkbox" id="mod3" />
-        <img src="https://i.imgur.com/MP3gXuE.png" alt="SkyBlock">
+        <img src="images/skyblock.png" alt="SkyBlock">
         <label for="mod3">SkyBlock</label>
       </div>
       <div class="mod-item">
         <input type="checkbox" id="mod4" />
-        <img src="https://i.imgur.com/SUelL7k.png" alt="Furniture Mod">
+        <img src="images/furniture.png" alt="Furniture Mod">
         <label for="mod4">Furniture Mod</label>
       </div>
     </div>
