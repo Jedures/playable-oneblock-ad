@@ -1,42 +1,212 @@
-<script>
-  const checkboxes = document.querySelectorAll("input[type='checkbox']");
-  const installBtn = document.getElementById("installBtn");
-  const progressBar = document.getElementById("progressBar");
-  const loading = document.getElementById("loading");
-  const main = document.getElementById("main");
-  const cta = document.getElementById("cta");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Block Mods</title>
+  <style>
+    @font-face {
+      font-family: 'PressStart2P';
+      src: url('fonts/PressStart2P.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-  // Активувати кнопку, якщо хоч щось вибране
-  checkboxes.forEach(cb => {
-    cb.addEventListener("change", () => {
-      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
-      installBtn.disabled = !anyChecked;
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'PressStart2P', sans-serif;
+      background: url('images/background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #00ff00;
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #000;
+    }
+
+    .mod-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .mod-item {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 15px;
+      border: 2px solid #555;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .mod-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 1px solid #888;
+      pointer-events: none;
+    }
+
+    .mod-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #00ff00;
+      cursor: pointer;
+    }
+
+    .mod-item label {
+      flex-grow: 1;
+      text-align: left;
+      font-size: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .button {
+      padding: 12px 24px;
+      background: #00aa00;
+      border: 2px solid #003300;
+      border-radius: 6px;
+      font-size: 10px;
+      color: white;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .button:disabled {
+      background: #444;
+      border-color: #222;
+      cursor: not-allowed;
+    }
+
+    #loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .bar {
+      width: 80%;
+      height: 20px;
+      background: #000;
+      border: 2px solid #555;
+      margin-top: 20px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #00cc00;
+      transition: width 2s linear;
+    }
+
+    #cta {
+      display: none;
+      margin-top: 30px;
+      background: #ff0000;
+      border: 2px solid #660000;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="main">
+    <h1>Select Your Mods</h1>
+    <div class="mod-list">
+      <div class="mod-item">
+        <input type="checkbox" id="mod1" />
+        <img src="images/oneblock.png" alt="One Block">
+        <label for="mod1">One Block</label>
+      </div>
+      <div class="mod-item">
+        <input type="checkbox" id="mod2" />
+        <img src="images/luckyblock.png" alt="Lucky Block">
+        <label for="mod2">Lucky Block</label>
+      </div>
+      <div class="mod-item">
+        <input type="checkbox" id="mod3" />
+        <img src="images/skyblock.png" alt="SkyBlock">
+        <label for="mod3">SkyBlock</label>
+      </div>
+      <div class="mod-item">
+        <input type="checkbox" id="mod4" />
+        <img src="images/furniture.png" alt="Furniture Mod">
+        <label for="mod4">Furniture Mod</label>
+      </div>
+    </div>
+    <button class="button" id="installBtn" disabled>Install</button>
+  </div>
+
+  <div class="overlay" id="loading">
+    <h1>Installing...</h1>
+    <div class="bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+    <button class="button" id="cta">Open in Minecraft</button>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    const installBtn = document.getElementById("installBtn");
+    const progressBar = document.getElementById("progressBar");
+    const loading = document.getElementById("loading");
+    const main = document.getElementById("main");
+    const cta = document.getElementById("cta");
+
+    // Активувати кнопку, якщо хоч щось вибране
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", () => {
+        const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        installBtn.disabled = !anyChecked;
+      });
     });
-  });
 
-  // Клік по всій картці
-  document.querySelectorAll('.mod-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      const checkbox = item.querySelector('input[type="checkbox"]');
-      if (e.target !== checkbox) {
-        checkbox.checked = !checkbox.checked;
-        checkbox.dispatchEvent(new Event('change'));
-      }
+    // Клік по всій картці мода
+    document.querySelectorAll('.mod-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        if (e.target !== checkbox) {
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
     });
-  });
 
-  installBtn.addEventListener("click", () => {
-    main.style.display = "none";
-    loading.style.display = "flex";
-    setTimeout(() => {
-      progressBar.style.width = "100%";
-    }, 100);
-    setTimeout(() => {
-      cta.style.display = "inline-block";
-    }, 2000);
-  });
+    installBtn.addEventListener("click", () => {
+      main.style.display = "none";
+      loading.style.display = "flex";
+      setTimeout(() => {
+        progressBar.style.width = "100%";
+      }, 100);
+      setTimeout(() => {
+        cta.style.display = "inline-block";
+      }, 2000);
+    });
 
-  cta.addEventListener("click", () => {
-    window.open("https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock", "_blank");
-  });
-</script>
+    cta.addEventListener("click", () => {
+      window.open("https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock", "_blank");
+    });
+  </script>
+</body>
+</html>
