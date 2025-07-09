@@ -82,17 +82,17 @@
     }
 
     .button {
-  padding: 12px 24px;
-  background: #00aa00;
-  border: 2px solid #003300;
-  border-radius: 6px;
-  font-size: 10px;
-  color: white;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: 'PressStart2P', sans-serif;
-  letter-spacing: 1px;
-}
+      padding: 12px 24px;
+      background: #00aa00;
+      border: 2px solid #003300;
+      border-radius: 6px;
+      font-size: 10px;
+      color: white;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: 'PressStart2P', sans-serif;
+      letter-spacing: 1px;
+    }
 
     .button:disabled {
       background: #444;
@@ -207,7 +207,12 @@
     });
 
     cta.addEventListener("click", () => {
-      window.open("https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock", "_blank");
+      const url = "https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock";
+      if (typeof mraid !== 'undefined' && typeof mraid.open === 'function') {
+        mraid.open(url);
+      } else {
+        window.open(url, "_blank");
+      }
     });
   </script>
 </body>
