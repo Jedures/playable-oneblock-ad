@@ -85,18 +85,19 @@
       justify-content: flex-start;
       gap: 10px;
       width: 90%;
-      max-width: 320px;
+      max-width: 360px;
+      font-size: 12px;
       color: white;
       background: rgba(0, 0, 0, 0.6);
-      padding: 12px;
+      padding: 16px;
       border: 2px solid #555;
       border-radius: 8px;
       box-sizing: border-box;
     }
 
     .mod-item img {
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       flex-shrink: 0;
     }
 
@@ -183,6 +184,26 @@
     #cta.visible {
       opacity: 1;
       pointer-events: auto;
+      animation: pulse 1.2s infinite;
+    }
+
+    #installBtn {
+      animation: pulse 1.2s infinite;
+      transform-origin: center;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
   </style>
 </head>
