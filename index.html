@@ -17,19 +17,14 @@
       width: 100%;
       height: 100%;
       font-family: 'PressStart2P', sans-serif;
-      background: url('https://i.imgur.com/MineCraftBackground.jpg') no-repeat center center fixed;
+      background: url('https://i.imgur.com/FvTthQi.jpg') no-repeat center center fixed;
       background-size: cover;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-y;
       color: #0f0;
-      text-shadow: 1px 1px 3px #000;
-    }
-
-    body {
-      display: block;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     ::-webkit-scrollbar {
@@ -41,8 +36,14 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: rgba(15, 255, 15, 0.5);
+      background: rgba(255, 255, 255, 0.4);
       border-radius: 3px;
+    }
+
+    body {
+      display: block;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
     }
 
     .wrapper {
@@ -52,75 +53,81 @@
       padding: 20px;
       box-sizing: border-box;
       text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      user-select: none;
+    }
+
+    .overlay {
+      display: block;
+      width: 100%;
+      text-align: center;
     }
 
     h1 {
-      font-size: 16px;
-      margin-bottom: 15px;
+      color: #0f0;
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #000;
+      height: auto;
+      min-height: 100%;
+      box-sizing: border-box;
     }
 
     .mod-list {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
       width: 100%;
+      padding-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .mod-item {
+      scroll-snap-align: start;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
-      width: 90%;
-      max-width: 360px;
-      font-size: 13px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 14px 16px;
-      border: 2px solid #0f0;
+      justify-content: flex-start;
+      gap: 6px;
+      min-width: 120px;
+      font-size: 12px;
+      color: white;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 16px 12px;
+      border: 2px solid #555;
       border-radius: 8px;
+      box-sizing: border-box;
       cursor: pointer;
-      transition: background-color 0.3s;
       user-select: none;
+      position: relative;
     }
 
-    .mod-item:hover {
-      background: rgba(15, 255, 15, 0.15);
+    .mod-item input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      accent-color: #0f0;
+      cursor: pointer;
     }
 
     .mod-item img {
-      width: 70px;
-      height: 70px;
-      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
       pointer-events: none;
-      border-radius: 6px;
-      border: 1px solid #0f0;
+      border-radius: 8px;
+      border: 2px solid #0f0;
     }
 
     .mod-item label {
-      flex: 1;
-      text-align: left;
-      font-size: 12px;
       pointer-events: none;
-      color: #0f0;
-    }
-
-    input[type=checkbox] {
-      width: 22px;
-      height: 22px;
-      accent-color: #0f0;
-      cursor: pointer;
-      pointer-events: auto;
+      font-size: 12px;
     }
 
     .button {
       display: inline-block;
-      margin: 20px auto 0;
+      margin: 20px auto;
       font-family: 'PressStart2P', sans-serif;
-      font-size: 13px;
-      padding: 14px 26px;
+      font-size: 10px;
+      padding: 12px 24px;
       background: #00aa00;
       border: 2px solid #003300;
       border-radius: 6px;
@@ -129,23 +136,24 @@
       text-transform: uppercase;
       text-align: center;
       user-select: none;
-      transition: background-color 0.3s, border-color 0.3s;
       width: 200px;
+      transition: background-color 0.3s ease;
     }
 
     .button:disabled {
       background: #444;
       border-color: #222;
       cursor: not-allowed;
+      font-family: 'PressStart2P', sans-serif;
     }
 
     .bar {
       width: 80%;
-      height: 22px;
+      height: 20px;
       background: #000;
       border: 2px solid #555;
-      margin: 30px auto 0;
-      border-radius: 6px;
+      margin: 40px auto 0;
+      border-radius: 5px;
       overflow: hidden;
     }
 
@@ -160,6 +168,7 @@
       display: none;
       flex-direction: column;
       align-items: center;
+      margin-top: 40px;
       margin-bottom: 60px;
       user-select: none;
     }
@@ -168,32 +177,23 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease;
-      margin-top: 15px;
+      margin-top: 20px;
       background: #ff0000;
       border: 2px solid #660000;
-      width: 200px;
-      padding: 14px 0;
       font-family: 'PressStart2P', sans-serif;
-      font-size: 13px;
+      font-size: 10px;
+      padding: 12px 24px;
       cursor: pointer;
       border-radius: 6px;
+      width: 200px;
       user-select: none;
-      text-transform: uppercase;
     }
 
     #cta.visible {
       opacity: 1;
       pointer-events: auto;
       animation: pulse 1.2s infinite;
-    }
-
-    #installHint,
-    #selectHint {
-      font-size: 12px;
-      color: #0f0;
-      margin-top: 8px;
-      font-style: italic;
-      text-shadow: 1px 1px 4px #000;
+      transform-origin: center;
     }
 
     @keyframes pulse {
@@ -209,73 +209,83 @@
         transform: scale(1);
       }
     }
+
+    #selectHint, #installHint {
+      font-family: 'PressStart2P', sans-serif;
+      color: #0f0;
+      font-size: 10px;
+      margin: 12px 0 0;
+      text-shadow: 1px 1px 2px #000;
+      user-select: none;
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="wrapper" id="main">
-    <h1>Select Your Mods</h1>
-    <div class="mod-list" id="modList">
+  <div class="wrapper">
+    <div class="overlay" id="main">
+      <h1>Select Your Mods</h1>
+      <div class="mod-list" id="modList">
 
-      <div class="mod-item" data-id="m1">
-        <input type="checkbox" id="m1" />
-        <img src="https://i.imgur.com/s0aFJbI.png" alt="One Block" />
-        <label for="m1">One Block</label>
-      </div>
+        <div class="mod-item" data-id="m1">
+          <input type="checkbox" id="m1" />
+          <img src="https://i.imgur.com/s0aFJbI.png" alt="One Block" />
+          <label for="m1">One Block</label>
+        </div>
 
-      <div class="mod-item" data-id="m2">
-        <input type="checkbox" id="m2" />
-        <img src="https://i.imgur.com/59zqDZD.png" alt="Lucky Block" />
-        <label for="m2">Lucky Block</label>
-      </div>
+        <div class="mod-item" data-id="m2">
+          <input type="checkbox" id="m2" />
+          <img src="https://i.imgur.com/59zqDZD.png" alt="Lucky Block" />
+          <label for="m2">Lucky Block</label>
+        </div>
 
-      <div class="mod-item" data-id="m3">
-        <input type="checkbox" id="m3" />
-        <img src="https://i.imgur.com/HLGQnx3.png" alt="SkyBlock" />
-        <label for="m3">SkyBlock</label>
-      </div>
+        <div class="mod-item" data-id="m3">
+          <input type="checkbox" id="m3" />
+          <img src="https://i.imgur.com/HLGQnx3.png" alt="SkyBlock" />
+          <label for="m3">SkyBlock</label>
+        </div>
 
-      <div class="mod-item" data-id="m4">
-        <input type="checkbox" id="m4" />
-        <img src="https://i.imgur.com/4LHKKb6.png" alt="Furniture Mod" />
-        <label for="m4">Furniture Mod</label>
-      </div>
+        <div class="mod-item" data-id="m4">
+          <input type="checkbox" id="m4" />
+          <img src="https://i.imgur.com/4LHKKb6.png" alt="Furniture Mod" />
+          <label for="m4">Furniture Mod</label>
+        </div>
 
-      <div class="mod-item" data-id="m5">
-        <input type="checkbox" id="m5" />
-        <img src="https://i.imgur.com/4J0lZ1S.png" alt="Biomes O' Plenty" />
-        <label for="m5">Biomes O' Plenty</label>
-      </div>
+        <div class="mod-item" data-id="m5">
+          <input type="checkbox" id="m5" />
+          <img src="https://i.imgur.com/4J0lZ1S.png" alt="Biomes O' Plenty" />
+          <label for="m5">Biomes O' Plenty</label>
+        </div>
 
-      <div class="mod-item" data-id="m6">
-        <input type="checkbox" id="m6" />
-        <img src="https://i.imgur.com/6d1U60B.png" alt="Industrial Craft" />
-        <label for="m6">Industrial Craft</label>
-      </div>
+        <div class="mod-item" data-id="m6">
+          <input type="checkbox" id="m6" />
+          <img src="https://i.imgur.com/6d1U60B.png" alt="Industrial Craft" />
+          <label for="m6">Industrial Craft</label>
+        </div>
 
-      <div class="mod-item" data-id="m7">
-        <input type="checkbox" id="m7" />
-        <img src="https://i.imgur.com/ZYXZDyv.png" alt="Tinkers' Construct" />
-        <label for="m7">Tinkers' Construct</label>
-      </div>
+        <div class="mod-item" data-id="m7">
+          <input type="checkbox" id="m7" />
+          <img src="https://i.imgur.com/ZYXZDyv.png" alt="Tinkers' Construct" />
+          <label for="m7">Tinkers' Construct</label>
+        </div>
 
-      <div class="mod-item" data-id="m8">
-        <input type="checkbox" id="m8" />
-        <img src="https://i.imgur.com/1OZOfyK.png" alt="JourneyMap" />
-        <label for="m8">JourneyMap</label>
+        <div class="mod-item" data-id="m8">
+          <input type="checkbox" id="m8" />
+          <img src="https://i.imgur.com/1OZOfyK.png" alt="JourneyMap" />
+          <label for="m8">JourneyMap</label>
+        </div>
       </div>
+      <div id="selectHint">Click on mods to select them</div>
+      <button class="button" id="installBtn" disabled>Install Selected Mods</button>
     </div>
 
-    <div id="selectHint">Click on mods to select them</div>
-    <button class="button" id="installBtn" disabled>Install Selected Mods</button>
-  </div>
-
-  <div class="overlay" id="loading">
-    <div class="bar">
-      <div class="progress" id="progressBar"></div>
+    <div id="loading">
+      <div class="bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+      <button id="cta" onclick="if(window.mraid && mraid.open) {mraid.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock')} else {window.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock','_blank')}">Open in Minecraft</button>
     </div>
-    <button class="button" id="cta"
-      onclick="if(window.mraid && mraid.open) {mraid.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock')} else {window.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock','_blank')}">Open in Minecraft</button>
   </div>
 
   <script>
@@ -288,37 +298,29 @@
     const openBtn = document.getElementById('cta');
     const selectHint = document.getElementById('selectHint');
 
-    // Показати підказку спочатку
+    // Показуємо підказку на початку
     selectHint.style.display = 'block';
 
     modItems.forEach(item => {
       const cb = item.querySelector('input[type=checkbox]');
       item.addEventListener('click', (e) => {
-        // Клік по самому чекбоксу - стандартна поведінка
         if (e.target === cb) {
           updateInstallButton();
           return;
         }
-
-        // Якщо чекбокси заблоковані (після інсталації), не реагуємо
-        if (installBtn.disabled === false) {
-          // Тогл чекбокса при кліку на весь блок
+        if (!installBtn.disabled) {
           cb.checked = !cb.checked;
           updateInstallButton();
-
-          // Приховати підказку після першого кліку
           selectHint.style.display = 'none';
         }
       });
     });
 
-    // Функція оновлення кнопки Install
     function updateInstallButton() {
       const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
       installBtn.disabled = !anyChecked;
     }
 
-    // Вмикаємо кнопку тільки при виборі чекбоксів
     checkboxes.forEach(cb => {
       cb.addEventListener('change', () => {
         updateInstallButton();
@@ -327,24 +329,19 @@
 
     installBtn.addEventListener('click', () => {
       installBtn.disabled = true;
-      // Заблокувати всі чекбокси
       checkboxes.forEach(cb => cb.disabled = true);
-
-      // Приховуємо підказку
       selectHint.style.display = 'none';
-
       mainScreen.style.display = 'none';
       loadingScreen.style.display = 'flex';
-
       progressBar.style.width = '0%';
       openBtn.classList.remove('visible');
 
-      // Запускаємо прогресбар
+      // Анімація прогресбару
       setTimeout(() => {
         progressBar.style.width = '100%';
       }, 100);
 
-      // Показуємо кнопку "Open in Minecraft" строго після 2с (тривалість анімації прогресбару)
+      // Показ кнопки після завершення прогресу
       setTimeout(() => {
         openBtn.classList.add('visible');
       }, 2100);
