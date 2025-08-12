@@ -22,6 +22,7 @@
       overflow-x: hidden;
       color: white;
       -webkit-overflow-scrolling: touch;
+      font-size: 16px; /* Збільшуємо базовий шрифт */
     }
 
     body {
@@ -29,7 +30,7 @@
       flex-direction: column;
       align-items: center;
       overflow-y: auto;
-      padding: 20px;
+      padding: 30px;
       background-color: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(5px);
       min-height: 100vh;
@@ -38,8 +39,8 @@
 
     h1 {
       color: #0f0;
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 24px;
+      margin-bottom: 24px;
       text-shadow: 1px 1px #000;
       text-align: center;
       user-select: none;
@@ -49,10 +50,10 @@
       width: 100%;
       max-width: 480px;
       position: relative;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       background: rgba(0, 0, 0, 0.6);
       border-radius: 8px;
-      padding: 10px 0;
+      padding: 14px 0;
       box-sizing: border-box;
       border: 2px solid #0f0;
     }
@@ -72,17 +73,17 @@
     }
 
     .mod-item {
-      flex: 0 0 90px;
+      flex: 0 0 110px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 8px;
+      margin: 0 12px;
       cursor: pointer;
       border: 2px solid transparent;
       border-radius: 8px;
-      padding: 8px 4px;
-      font-size: 10px;
+      padding: 12px 6px;
+      font-size: 14px;
       color: #ccc;
       transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
       position: relative;
@@ -92,24 +93,24 @@
     .mod-item.selected {
       border-color: #0f0;
       color: #0f0;
-      box-shadow: 0 0 8px 2px #0f0;
+      box-shadow: 0 0 10px 3px #0f0;
     }
 
     .mod-item div.img-placeholder {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       background-color: #222;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 0 3px currentColor);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 4px currentColor);
     }
 
     .mod-item input[type=checkbox] {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       accent-color: #0f0;
       pointer-events: auto;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     #prevBtn,
@@ -117,15 +118,15 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       background: rgba(0, 0, 0, 0.6);
       border: 2px solid #555;
-      border-radius: 6px;
+      border-radius: 8px;
       color: #0f0;
       font-weight: bold;
-      font-size: 20px;
-      line-height: 28px;
+      font-size: 26px;
+      line-height: 36px;
       text-align: center;
       cursor: pointer;
       user-select: none;
@@ -133,11 +134,11 @@
     }
 
     #prevBtn {
-      left: -44px;
+      left: -52px;
     }
 
     #nextBtn {
-      right: -44px;
+      right: -52px;
     }
 
     #prevBtn:disabled,
@@ -148,16 +149,17 @@
 
     #installBtn {
       font-family: 'PressStart2P', sans-serif;
-      font-size: 10px;
-      padding: 12px 24px;
+      font-size: 14px;
+      padding: 16px 32px;
       background: #00aa00;
       border: 2px solid #003300;
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
       cursor: pointer;
       text-transform: uppercase;
-      margin: 12px 0;
+      margin: 20px 0;
       user-select: none;
+      transition: background-color 0.3s;
     }
 
     #installBtn:disabled {
@@ -177,11 +179,11 @@
 
     .bar {
       width: 100%;
-      height: 20px;
+      height: 24px;
       background: #000;
       border: 2px solid #555;
-      margin-top: 20px;
-      border-radius: 5px;
+      margin-top: 30px;
+      border-radius: 6px;
       overflow: hidden;
     }
 
@@ -193,29 +195,30 @@
     }
 
     #openBtn {
-      margin-top: 16px;
+      margin-top: 22px;
       font-family: 'PressStart2P', sans-serif;
-      font-size: 12px;
-      padding: 12px 28px;
+      font-size: 16px;
+      padding: 14px 36px;
       background: #ff0000;
       border: 2px solid #660000;
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
       cursor: pointer;
       text-transform: uppercase;
       display: none;
       animation: pulse 1.2s infinite;
       user-select: none;
+      box-shadow: 0 0 12px #ff0000;
     }
 
     #tooltip {
-      margin-top: 6px;
-      font-size: 10px;
+      margin-top: 14px;
+      font-size: 16px;
       color: #0f0;
       font-family: 'PressStart2P', sans-serif;
       text-align: center;
       user-select: none;
-      min-height: 16px;
+      min-height: 22px;
       transition: opacity 0.3s ease;
     }
 
@@ -289,62 +292,73 @@
 
     // Створення модів
     mods.forEach(mod => {
-      const item = document.createElement('div');
-      item.className = 'mod-item';
-      item.dataset.id = mod.id;
+      const modItem = document.createElement('div');
+      modItem.classList.add('mod-item');
+      modItem.setAttribute('data-id', mod.id);
+      modItem.setAttribute('tabindex', '0');
 
+      // Колірна "іконка"
       const imgPlaceholder = document.createElement('div');
-      imgPlaceholder.className = 'img-placeholder';
+      imgPlaceholder.classList.add('img-placeholder');
       imgPlaceholder.style.backgroundColor = mod.color;
-      item.appendChild(imgPlaceholder);
 
       const label = document.createElement('div');
       label.textContent = mod.name;
-      item.appendChild(label);
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.style.marginTop = '6px';
-      item.appendChild(checkbox);
+      checkbox.id = mod.id;
 
-      item.addEventListener('click', e => {
-        if (e.target.tagName !== 'INPUT' && !checkbox.disabled) {
+      modItem.appendChild(imgPlaceholder);
+      modItem.appendChild(label);
+      modItem.appendChild(checkbox);
+      modList.appendChild(modItem);
+
+      // Обробка кліку по моді
+      modItem.addEventListener('click', () => {
+        if (installBtn.disabled === false) {
           checkbox.checked = !checkbox.checked;
-          checkbox.dispatchEvent(new Event('change'));
-          // Приховати підказку про кліки після першого кліку
-          tooltip.classList.add('hidden');
+          modItem.classList.toggle('selected', checkbox.checked);
+          updateInstallButton();
+
+          // Ховаємо підказку після першого кліку
+          if (!tooltip.classList.contains('hidden')) {
+            tooltip.classList.add('hidden');
+          }
         }
       });
 
-      checkbox.addEventListener('change', () => {
-        item.classList.toggle('selected', checkbox.checked);
-        updateInstallButton();
+      // Також підтримка клавіатурою (Enter/Space)
+      modItem.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          modItem.click();
+        }
       });
-
-      modList.appendChild(item);
     });
 
+    // Карусель
     let currentIndex = 0;
-    const visibleMods = 4;
-    const modWidth = 90 + 16; // item width + margin left + right (8+8)
+    const modWidth = 134; // ширина .mod-item + margin
+    const visibleCount = 3; // скільки модів видно
+
+    const maxIndex = mods.length - visibleCount;
 
     function updateCarousel() {
-      const maxIndex = mods.length - visibleMods;
       if (currentIndex < 0) currentIndex = 0;
       if (currentIndex > maxIndex) currentIndex = maxIndex;
       modList.style.transform = `translateX(${-currentIndex * modWidth}px)`;
-
       prevBtn.disabled = currentIndex === 0;
       nextBtn.disabled = currentIndex === maxIndex;
     }
 
     prevBtn.addEventListener('click', () => {
-      currentIndex -= 1;
+      currentIndex--;
       updateCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
-      currentIndex += 1;
+      currentIndex++;
       updateCarousel();
     });
 
@@ -354,22 +368,24 @@
     }
 
     installBtn.addEventListener('click', () => {
-      // Показати підказку перед інсталяцією
-      tooltip.textContent = 'Press Install to start';
+      // Відключаємо чекбокси та кнопки після кліку
+      document.querySelectorAll('.mod-item input[type=checkbox]').forEach(chk => {
+        chk.disabled = true;
+      });
+      document.querySelectorAll('.mod-item').forEach(item => {
+        item.style.pointerEvents = 'none';
+      });
+      installBtn.disabled = true;
+      tooltip.textContent = 'Installing...';
       tooltip.classList.remove('hidden');
 
-      // Сховаємо кнопку інсталяції і покажемо loading
-      installBtn.disabled = true;
-
-      // Імітація процесу інсталяції з прогрес баром
-      let progress = 0;
       loading.style.display = 'flex';
       progressBar.style.width = '0%';
 
+      let progress = 0;
       const interval = setInterval(() => {
         progress += 10;
         progressBar.style.width = progress + '%';
-
         if (progress >= 100) {
           clearInterval(interval);
           openBtn.style.display = 'inline-block';
@@ -379,11 +395,11 @@
     });
 
     openBtn.addEventListener('click', () => {
-      alert('Opening Minecraft...');
-      // Логіка відкриття Minecraft тут
+      window.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock', '_blank');
     });
 
     updateCarousel();
+    updateInstallButton();
   </script>
 </body>
 
