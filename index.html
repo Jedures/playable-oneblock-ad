@@ -17,12 +17,12 @@
       width: 100%;
       height: 100%;
       font-family: 'PressStart2P', sans-serif;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: url('https://i.imgur.com/jzM25vG.png') repeat; /* Minecraft grass pixel texture */
+      background-size: 64px 64px;
       overflow-x: hidden;
-      color: white;
-      -webkit-overflow-scrolling: touch;
-      font-size: 16px; /* Збільшуємо базовий шрифт */
+      color: #dddcd7;
+      font-size: 16px;
+      user-select: none;
     }
 
     body {
@@ -31,19 +31,18 @@
       align-items: center;
       overflow-y: auto;
       padding: 30px;
-      background-color: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
       min-height: 100vh;
       box-sizing: border-box;
     }
 
     h1 {
-      color: #0f0;
-      font-size: 24px;
+      color: #e6d7a3;
+      font-size: 26px;
       margin-bottom: 24px;
-      text-shadow: 1px 1px #000;
+      text-shadow: 1px 1px 3px #000;
       text-align: center;
-      user-select: none;
     }
 
     .carousel-wrapper {
@@ -51,18 +50,17 @@
       max-width: 480px;
       position: relative;
       margin-bottom: 12px;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 8px;
-      padding: 14px 0;
+      background: rgba(20, 20, 20, 0.8);
+      border-radius: 10px;
+      padding: 18px 0;
       box-sizing: border-box;
-      border: 2px solid #0f0;
+      border: 2px solid #9ecf8e;
     }
 
     .carousel {
       display: flex;
       overflow: hidden;
       border-radius: 8px;
-      user-select: none;
     }
 
     #modList {
@@ -82,35 +80,35 @@
       cursor: pointer;
       border: 2px solid transparent;
       border-radius: 8px;
-      padding: 12px 6px;
+      padding: 14px 8px;
       font-size: 14px;
-      color: #ccc;
+      color: #c3c2b7;
       transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
       position: relative;
-      user-select: none;
     }
 
     .mod-item.selected {
-      border-color: #0f0;
-      color: #0f0;
-      box-shadow: 0 0 10px 3px #0f0;
+      border-color: #8aba56;
+      color: #9ecf8e;
+      box-shadow: 0 0 10px 3px #8aba56;
     }
 
     .mod-item div.img-placeholder {
       width: 80px;
       height: 80px;
-      background-color: #222;
+      background-color: #4e7831;
       border-radius: 8px;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 0 4px currentColor);
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 8px #38531b;
     }
 
+    /* Ховаємо чекбокси, але вони залишаються інтерактивними */
     .mod-item input[type=checkbox] {
-      width: 22px;
-      height: 22px;
-      accent-color: #0f0;
-      pointer-events: auto;
-      margin-top: 8px;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      width: 0;
+      height: 0;
     }
 
     #prevBtn,
@@ -118,27 +116,35 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.6);
-      border: 2px solid #555;
-      border-radius: 8px;
-      color: #0f0;
+      width: 42px;
+      height: 42px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #6a9955;
+      border-radius: 10px;
+      color: #9ecf8e;
       font-weight: bold;
-      font-size: 26px;
-      line-height: 36px;
+      font-size: 28px;
+      line-height: 38px;
       text-align: center;
       cursor: pointer;
       user-select: none;
       z-index: 10;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    #prevBtn:hover:not(:disabled),
+    #nextBtn:hover:not(:disabled) {
+      background-color: #8aba56;
+      border-color: #5a7a33;
+      color: #1a2d05;
     }
 
     #prevBtn {
-      left: -52px;
+      left: -54px;
     }
 
     #nextBtn {
-      right: -52px;
+      right: -54px;
     }
 
     #prevBtn:disabled,
@@ -149,12 +155,12 @@
 
     #installBtn {
       font-family: 'PressStart2P', sans-serif;
-      font-size: 14px;
-      padding: 16px 32px;
-      background: #00aa00;
-      border: 2px solid #003300;
-      border-radius: 8px;
-      color: white;
+      font-size: 15px;
+      padding: 18px 36px;
+      background: #7b9e37;
+      border: 2px solid #465a1a;
+      border-radius: 12px;
+      color: #f0f0d8;
       cursor: pointer;
       text-transform: uppercase;
       margin: 20px 0;
@@ -163,10 +169,10 @@
     }
 
     #installBtn:disabled {
-      background: #444;
-      border-color: #222;
+      background: #3f4a27;
+      border-color: #232a14;
       cursor: not-allowed;
-      color: #888;
+      color: #7c7b6d;
     }
 
     #loading {
@@ -179,47 +185,56 @@
 
     .bar {
       width: 100%;
-      height: 24px;
-      background: #000;
-      border: 2px solid #555;
+      height: 28px;
+      background: #26331a;
+      border: 2px solid #587833;
       margin-top: 30px;
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
+      box-shadow: inset 0 0 6px #3a5a10;
     }
 
     .progress {
       height: 100%;
       width: 0;
-      background: #0c0;
+      background: #9ecf8e;
       transition: width 0.3s linear;
+      box-shadow: 0 0 10px #a0d468;
     }
 
     #openBtn {
-      margin-top: 22px;
+      margin-top: 26px;
       font-family: 'PressStart2P', sans-serif;
-      font-size: 16px;
-      padding: 14px 36px;
-      background: #ff0000;
-      border: 2px solid #660000;
-      border-radius: 8px;
-      color: white;
+      font-size: 18px;
+      padding: 16px 40px;
+      background: #c33c2a;
+      border: 2px solid #7a1a10;
+      border-radius: 12px;
+      color: #f0d2bf;
       cursor: pointer;
       text-transform: uppercase;
       display: none;
       animation: pulse 1.2s infinite;
       user-select: none;
-      box-shadow: 0 0 12px #ff0000;
+      box-shadow: 0 0 16px #d13f24;
+      transition: background-color 0.3s;
+    }
+
+    #openBtn:hover {
+      background-color: #e04c36;
+      border-color: #7f1b12;
+      box-shadow: 0 0 24px #e84c38;
     }
 
     #tooltip {
-      margin-top: 14px;
-      font-size: 16px;
-      color: #0f0;
-      font-family: 'PressStart2P', sans-serif;
+      margin-top: 18px;
+      font-size: 18px;
+      color: #a2c77f;
+      font-family: 'PressStart2P', monospace, sans-serif;
       text-align: center;
       user-select: none;
-      min-height: 22px;
-      transition: opacity 0.3s ease;
+      min-height: 28px;
+      transition: opacity 0.4s ease;
     }
 
     #tooltip.hidden {
@@ -271,7 +286,7 @@
 
   <script>
     const mods = [
-      { id: 'm1', name: 'One Block', color: '#00ff00' },
+      { id: 'm1', name: 'One Block', color: '#00aa00' },
       { id: 'm2', name: 'Lucky Block', color: '#ffcc00' },
       { id: 'm3', name: 'SkyBlock', color: '#00ccff' },
       { id: 'm4', name: 'Furniture Mod', color: '#cc5500' },
@@ -290,58 +305,44 @@
     const nextBtn = document.getElementById('nextBtn');
     const tooltip = document.getElementById('tooltip');
 
-    // Створення модів
     mods.forEach(mod => {
-      const modItem = document.createElement('div');
+      const modItem = document.createElement('label'); // changed div -> label for checkbox binding
       modItem.classList.add('mod-item');
       modItem.setAttribute('data-id', mod.id);
       modItem.setAttribute('tabindex', '0');
 
-      // Колірна "іконка"
       const imgPlaceholder = document.createElement('div');
       imgPlaceholder.classList.add('img-placeholder');
       imgPlaceholder.style.backgroundColor = mod.color;
 
-      const label = document.createElement('div');
-      label.textContent = mod.name;
+      const labelText = document.createElement('div');
+      labelText.textContent = mod.name;
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.id = mod.id;
+      checkbox.name = 'mods';
 
       modItem.appendChild(imgPlaceholder);
-      modItem.appendChild(label);
+      modItem.appendChild(labelText);
       modItem.appendChild(checkbox);
       modList.appendChild(modItem);
 
-      // Обробка кліку по моді
-      modItem.addEventListener('click', () => {
-        if (installBtn.disabled === false) {
-          checkbox.checked = !checkbox.checked;
-          modItem.classList.toggle('selected', checkbox.checked);
-          updateInstallButton();
+      checkbox.addEventListener('change', () => {
+        modItem.classList.toggle('selected', checkbox.checked);
+        updateInstallButton();
 
-          // Ховаємо підказку після першого кліку
-          if (!tooltip.classList.contains('hidden')) {
-            tooltip.classList.add('hidden');
-          }
+        if (!tooltip.classList.contains('hidden')) {
+          tooltip.classList.add('hidden');
         }
       });
 
-      // Також підтримка клавіатурою (Enter/Space)
-      modItem.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          modItem.click();
-        }
-      });
+      // Клавіатурна підтримка не потрібна, label це робить за нас
     });
 
-    // Карусель
     let currentIndex = 0;
-    const modWidth = 134; // ширина .mod-item + margin
-    const visibleCount = 3; // скільки модів видно
-
+    const modWidth = 134;
+    const visibleCount = 3;
     const maxIndex = mods.length - visibleCount;
 
     function updateCarousel() {
@@ -368,7 +369,7 @@
     }
 
     installBtn.addEventListener('click', () => {
-      // Відключаємо чекбокси та кнопки після кліку
+      // Заблокувати чекбокси та моди
       document.querySelectorAll('.mod-item input[type=checkbox]').forEach(chk => {
         chk.disabled = true;
       });
@@ -376,6 +377,7 @@
         item.style.pointerEvents = 'none';
       });
       installBtn.disabled = true;
+
       tooltip.textContent = 'Installing...';
       tooltip.classList.remove('hidden');
 
