@@ -17,10 +17,11 @@
       width: 100%;
       height: 100%;
       font-family: 'PressStart2P', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
       background-size: cover;
       overflow-x: hidden;
-      background: #000; /* повернув темний фон */
       color: white;
+      -webkit-overflow-scrolling: touch;
     }
 
     body {
@@ -28,9 +29,11 @@
       flex-direction: column;
       align-items: center;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
       padding: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -46,22 +49,26 @@
       width: 100%;
       max-width: 480px;
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      padding: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid #0f0;
     }
 
     .carousel {
       display: flex;
       overflow: hidden;
       border-radius: 8px;
-      border: 2px solid #555;
-      background: rgba(0, 0, 0, 0.6);
+      user-select: none;
     }
 
     #modList {
       display: flex;
       transition: transform 0.5s ease;
       will-change: transform;
-      padding: 10px 0;
+      padding: 0 10px;
     }
 
     .mod-item {
@@ -71,7 +78,6 @@
       align-items: center;
       justify-content: center;
       margin: 0 8px;
-      user-select: none;
       cursor: pointer;
       border: 2px solid transparent;
       border-radius: 8px;
@@ -80,6 +86,7 @@
       color: #ccc;
       transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
       position: relative;
+      user-select: none;
     }
 
     .mod-item.selected {
@@ -102,9 +109,11 @@
       height: 18px;
       accent-color: #0f0;
       pointer-events: auto;
+      margin-top: 6px;
     }
 
-    #prevBtn, #nextBtn {
+    #prevBtn,
+    #nextBtn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -131,7 +140,8 @@
       right: -44px;
     }
 
-    #prevBtn:disabled, #nextBtn:disabled {
+    #prevBtn:disabled,
+    #nextBtn:disabled {
       opacity: 0.3;
       cursor: default;
     }
@@ -146,7 +156,8 @@
       color: white;
       cursor: pointer;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin: 12px 0;
+      user-select: none;
     }
 
     #installBtn:disabled {
@@ -194,6 +205,26 @@
       text-transform: uppercase;
       display: none;
       animation: pulse 1.2s infinite;
+      user-select: none;
+    }
+
+    #tooltip {
+      margin-top: 6px;
+      font-size: 10px;
+      color: #0f0;
+      font-family: 'PressStart2P', sans-serif;
+      text-align: center;
+      user-select: none;
+      min-height: 16px;
+      transition: opacity 0.3s ease;
+    }
+
+    #tooltip.hidden {
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     @keyframes pulse {
@@ -215,7 +246,7 @@
 <body>
   <h1>Select Your Mods</h1>
 
-  <div class="carousel-wrapper">
+  <div class="carousel-wrapper" aria-label="Minecraft Mods">
     <button id="prevBtn" aria-label="Previous mods">&lt;</button>
     <div class="carousel">
       <div id="modList"></div>
@@ -223,14 +254,16 @@
     <button id="nextBtn" aria-label="Next mods">&gt;</button>
   </div>
 
+  <div id="tooltip">Click on mods to select</div>
+
   <button id="installBtn" disabled>Install Selected Mods</button>
 
-  <div id="loading">
+  <div id="loading" aria-live="polite" aria-busy="true">
     <h1>Installing...</h1>
     <div class="bar">
       <div class="progress" id="progressBar"></div>
     </div>
-    <button id="openBtn">Open in Minecraft</button>
+    <button id="openBtn" aria-label="Open Minecraft">Open in Minecraft</button>
   </div>
 
   <script>
@@ -252,6 +285,7 @@
     const openBtn = document.getElementById('openBtn');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const tooltip = document.getElementById('tooltip');
 
     // Створення модів
     mods.forEach(mod => {
@@ -277,6 +311,8 @@
         if (e.target.tagName !== 'INPUT' && !checkbox.disabled) {
           checkbox.checked = !checkbox.checked;
           checkbox.dispatchEvent(new Event('change'));
+          // Приховати підказку про кліки після першого кліку
+          tooltip.classList.add('hidden');
         }
       });
 
@@ -297,51 +333,59 @@
       if (currentIndex < 0) currentIndex = 0;
       if (currentIndex > maxIndex) currentIndex = maxIndex;
       modList.style.transform = `translateX(${-currentIndex * modWidth}px)`;
-      prevBtn.disabled = currentIndex <= 0;
-      nextBtn.disabled = currentIndex >= maxIndex;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === maxIndex;
     }
 
     prevBtn.addEventListener('click', () => {
-      currentIndex--;
+      currentIndex -= 1;
       updateCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
-      currentIndex++;
+      currentIndex += 1;
       updateCarousel();
     });
 
-    updateCarousel();
-
     function updateInstallButton() {
-      const anyChecked = [...document.querySelectorAll('.mod-item input[type=checkbox]')].some(cb => cb.checked);
+      const anyChecked = [...document.querySelectorAll('.mod-item input[type=checkbox]')].some(chk => chk.checked);
       installBtn.disabled = !anyChecked;
     }
 
     installBtn.addEventListener('click', () => {
+      // Показати підказку перед інсталяцією
+      tooltip.textContent = 'Press Install to start';
+      tooltip.classList.remove('hidden');
+
+      // Сховаємо кнопку інсталяції і покажемо loading
       installBtn.disabled = true;
-      document.querySelectorAll('.mod-item input[type=checkbox]').forEach(cb => cb.disabled = true);
 
-      loading.style.display = 'flex';
-      openBtn.style.display = 'none';
-
+      // Імітація процесу інсталяції з прогрес баром
       let progress = 0;
+      loading.style.display = 'flex';
       progressBar.style.width = '0%';
 
       const interval = setInterval(() => {
-        progress += 5;
+        progress += 10;
         progressBar.style.width = progress + '%';
+
         if (progress >= 100) {
           clearInterval(interval);
           openBtn.style.display = 'inline-block';
+          tooltip.classList.add('hidden');
         }
-      }, 150);
+      }, 350);
     });
 
     openBtn.addEventListener('click', () => {
-      window.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock', '_blank');
+      alert('Opening Minecraft...');
+      // Логіка відкриття Minecraft тут
     });
+
+    updateCarousel();
   </script>
 </body>
 
 </html>
+ 
