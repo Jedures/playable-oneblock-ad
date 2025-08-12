@@ -18,36 +18,24 @@
     margin-bottom: 20px;
   }
 
+  .carousel-container {
+    width: 520px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
   .carousel {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  #prevBtn, #nextBtn {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #333;
     background: #222;
-    border: none;
-    color: white;
-    font-size: 24px;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  #prevBtn:disabled, #nextBtn:disabled {
-    opacity: 0.3;
-    cursor: default;
   }
 
   #modList {
     display: flex;
-    overflow: hidden;
-    width: 520px;
-    gap: 16px;
     transition: transform 0.4s ease;
+    will-change: transform;
   }
 
   .mod-item {
@@ -63,6 +51,7 @@
     align-items: center;
     transition: box-shadow 0.3s ease;
     position: relative;
+    margin: 0 8px;
   }
 
   .mod-item.selected {
@@ -85,6 +74,34 @@
   .checkbox {
     width: 20px;
     height: 20px;
+  }
+
+  #prevBtn, #nextBtn {
+    background: #222;
+    border: none;
+    color: white;
+    font-size: 30px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  #prevBtn:disabled, #nextBtn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  #prevBtn {
+    left: -50px;
+  }
+
+  #nextBtn {
+    right: -50px;
   }
 
   #installBtn {
@@ -117,7 +134,7 @@
     background: #222;
     border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     position: relative;
   }
 
@@ -142,6 +159,7 @@
     user-select: none;
     text-transform: uppercase;
     animation: pulse 1.2s infinite;
+    margin-top: 10px; /* Зсув вниз від прогрес-бару */
   }
 
   @keyframes pulse {
@@ -155,9 +173,11 @@
 
 <h1>Choose Your Minecraft Mods</h1>
 
-<div class="carousel">
+<div class="carousel-container">
   <button id="prevBtn" aria-label="Previous mods">&lt;</button>
-  <div id="modList"></div>
+  <div class="carousel">
+    <div id="modList"></div>
+  </div>
   <button id="nextBtn" aria-label="Next mods">&gt;</button>
 </div>
 
@@ -231,21 +251,25 @@
 
   let currentIndex = 0;
   const visibleMods = 4;
+  const modWidth = 120 + 16; // ширина + margin (8*2)
 
   function updateCarousel() {
-    const translateX = -(currentIndex * (120 + 16));
+    const maxIndex = mods.length - visibleMods;
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    const translateX = -(currentIndex * modWidth);
     modList.style.transform = `translateX(${translateX}px)`;
     prevBtn.disabled = currentIndex <= 0;
-    nextBtn.disabled = currentIndex >= mods.length - visibleMods;
+    nextBtn.disabled = currentIndex >= maxIndex;
   }
 
   prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) currentIndex--;
+    currentIndex--;
     updateCarousel();
   });
 
   nextBtn.addEventListener('click', () => {
-    if (currentIndex < mods.length - visibleMods) currentIndex++;
+    currentIndex++;
     updateCarousel();
   });
 
@@ -257,12 +281,11 @@
   }
 
   installBtn.addEventListener('click', () => {
-    // Заблокуємо кнопку і чекбокси
     installBtn.disabled = true;
     document.querySelectorAll('.checkbox').forEach(cb => cb.disabled = true);
-    
+
     loading.style.display = 'flex';
-    openBtn.style.display = 'none'; // ховаємо кнопку до завершення
+    openBtn.style.display = 'none'; // ховаємо кнопку
 
     let progress = 0;
     progressFill.style.width = '0%';
@@ -272,13 +295,13 @@
       progressFill.style.width = progress + '%';
       if (progress >= 100) {
         clearInterval(interval);
-        openBtn.style.display = 'inline-block'; // показуємо кнопку після завершення
+        openBtn.style.display = 'inline-block';
       }
     }, 300);
   });
 
   openBtn.addEventListener('click', () => {
-    // Тут можна додати код для відкриття Minecraft або редиректу
+    // Тут можна відкрити Minecraft або редирект
   });
 </script>
 
