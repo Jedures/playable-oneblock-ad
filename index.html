@@ -5,191 +5,139 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cool Minecraft Mods Player</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
   body {
-    margin:0; padding:0;
-    background: linear-gradient(135deg, #111 0%, #222 100%);
-    font-family: 'Press Start 2P', cursive;
-    color: #0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    overflow-x: hidden;
   }
 
   h1 {
-    margin: 30px 0 10px 0;
-    font-size: 16px;
-    text-shadow: 0 0 5px #0f0;
+    margin-bottom: 20px;
   }
 
   .carousel {
-    position: relative;
-    width: 90vw;
-    max-width: 480px;
-    overflow: hidden;
-    border: 2px solid #0f0;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #0f0aa;
-    background: #000a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
-  .mod-list {
+  #prevBtn, #nextBtn {
+    background: #222;
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #prevBtn:disabled, #nextBtn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  #modList {
     display: flex;
-    transition: transform 0.4s ease;
-    will-change: transform;
-    padding: 20px 10px;
+    overflow: hidden;
+    width: 520px;
     gap: 16px;
+    transition: transform 0.4s ease;
   }
 
   .mod-item {
     flex: 0 0 120px;
-    background: #020;
-    border: 2px solid #040;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
+    background: #222;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
     user-select: none;
-    color: #0f0;
-    box-shadow: 0 0 8px #0f0;
-    transition:
-      box-shadow 0.3s ease,
-      transform 0.3s ease,
-      border-color 0.3s ease;
-    padding: 12px 6px 10px 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
     position: relative;
   }
 
-  .mod-item:hover {
-    transform: scale(1.1);
-    border-color: #0f0;
-    box-shadow: 0 0 20px #0f0;
-  }
-
   .mod-item.selected {
-    border-color: #0ff;
-    box-shadow: 0 0 25px #0ff, 0 0 40px #0ff inset;
+    box-shadow: 0 0 12px 3px #0f0;
   }
 
-  .mod-item img {
+  .mod-item div {
     width: 80px;
     height: 80px;
     border-radius: 8px;
-    pointer-events: none;
     margin-bottom: 8px;
-    filter: drop-shadow(0 0 3px #0f0);
+    filter: drop-shadow(0 0 4px currentColor);
   }
 
   .mod-label {
-    font-size: 12px;
-    letter-spacing: 1px;
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 
   .checkbox {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 18px;
-    height: 18px;
-    accent-color: #0f0;
-    cursor: pointer;
+    width: 20px;
+    height: 20px;
   }
 
-  /* Buttons to slide */
-  .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #0f0;
-    border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 8px #0f0;
-    transition: background 0.3s ease;
-    user-select: none;
-  }
-  .carousel-btn:hover {
-    background: #0fff0f;
-  }
-  .carousel-btn:disabled {
-    background: #030;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  #prevBtn {
-    left: 5px;
-  }
-  #nextBtn {
-    right: 5px;
-  }
-
-  /* Install Button */
   #installBtn {
-    margin: 25px auto 50px auto;
-    background: #0f0;
-    border: 2px solid #060;
-    padding: 14px 36px;
-    font-size: 14px;
-    color: #000;
+    background: #0a0;
+    border: none;
+    padding: 14px 30px;
+    font-size: 16px;
     font-weight: bold;
-    border-radius: 14px;
+    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 0 15px #0f0;
-    user-select: none;
-    transition: background 0.3s ease;
-    text-transform: uppercase;
-  }
-  #installBtn:disabled {
-    background: #060;
-    color: #040;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  #installBtn:hover:not(:disabled) {
-    background: #0fff0f;
+    color: black;
+    margin-bottom: 20px;
   }
 
-  /* Loading overlay */
+  #installBtn:disabled {
+    background: #444;
+    cursor: default;
+    color: #999;
+  }
+
   #loading {
     display: none;
     flex-direction: column;
     align-items: center;
-    color: #0f0;
-    margin-bottom: 60px;
   }
 
   .progress-bar {
-    width: 90vw;
-    max-width: 480px;
-    height: 22px;
-    background: #002200;
-    border: 2px solid #0f0;
+    width: 520px;
+    height: 24px;
+    background: #222;
     border-radius: 12px;
     overflow: hidden;
-    margin: 10px 0 30px 0;
-    box-shadow: 0 0 10px #0f0 inset;
-  }
-  .progress-fill {
-    height: 100%;
-    width: 0;
-    background: #0f0;
-    transition: width 2s ease;
-    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
   }
 
-  /* Open button in loading */
-  #openBtn {
+  .progress-fill {
+    height: 100%;
+    width: 0%;
     background: #0f0;
-    border: 2px solid #060;
+    transition: width 0.3s ease;
+  }
+
+  #openBtn {
+    display: none;
+    background: #0f0;
+    border: none;
     padding: 14px 36px;
-    font-size: 14px;
-    color: #000;
+    font-size: 16px;
     font-weight: bold;
     border-radius: 14px;
     cursor: pointer;
+    color: black;
     box-shadow: 0 0 15px #0f0;
     user-select: none;
     text-transform: uppercase;
@@ -198,36 +146,32 @@
 
   @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.08); }
     100% { transform: scale(1); }
   }
-
 </style>
 </head>
 <body>
 
-  <h1>Choose Your Minecraft Mods</h1>
+<h1>Choose Your Minecraft Mods</h1>
 
-  <div class="carousel">
-    <button id="prevBtn" class="carousel-btn" aria-label="Previous mods">&lt;</button>
-    <div class="mod-list" id="modList">
-      <!-- Моди будуть тут -->
-    </div>
-    <button id="nextBtn" class="carousel-btn" aria-label="Next mods">&gt;</button>
+<div class="carousel">
+  <button id="prevBtn" aria-label="Previous mods">&lt;</button>
+  <div id="modList"></div>
+  <button id="nextBtn" aria-label="Next mods">&gt;</button>
+</div>
+
+<button id="installBtn" disabled>Install Selected Mods</button>
+
+<div id="loading">
+  <h2>Installing Mods...</h2>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
   </div>
-
-  <button id="installBtn" disabled>Install Selected Mods</button>
-
-  <div id="loading">
-    <h2>Installing Mods...</h2>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <button id="openBtn" onclick="openMinecraft()">Open Minecraft</button>
-  </div>
+  <button id="openBtn">Open Minecraft</button>
+</div>
 
 <script>
-  // Дані модів
   const mods = [
     { id: 'm1', name: 'One Block', color: '#00ff00' },
     { id: 'm2', name: 'Lucky Block', color: '#ffcc00' },
@@ -246,21 +190,17 @@
   const loading = document.getElementById('loading');
   const progressFill = document.getElementById('progressFill');
   const openBtn = document.getElementById('openBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
-  // Створюємо моделі модів
   mods.forEach(mod => {
     const item = document.createElement('div');
     item.classList.add('mod-item');
     item.dataset.id = mod.id;
+    item.style.color = mod.color;
 
-    // Прев'ю кольоровий блок замість картинки
     const img = document.createElement('div');
-    img.style.width = '80px';
-    img.style.height = '80px';
     img.style.backgroundColor = mod.color;
-    img.style.borderRadius = '8px';
-    img.style.margin = '0 auto 8px auto';
-    img.style.filter = 'drop-shadow(0 0 4px ' + mod.color + ')';
     item.appendChild(img);
 
     const label = document.createElement('div');
@@ -274,15 +214,13 @@
     checkbox.setAttribute('aria-label', 'Select mod ' + mod.name);
     item.appendChild(checkbox);
 
-    // Клік по всьому блоку – переключає чекбокс
     item.addEventListener('click', e => {
-      if(e.target.tagName !== 'INPUT'){
+      if (e.target.tagName !== 'INPUT' && !checkbox.disabled) {
         checkbox.checked = !checkbox.checked;
         checkbox.dispatchEvent(new Event('change'));
       }
     });
 
-    // Анімація вибору
     checkbox.addEventListener('change', () => {
       item.classList.toggle('selected', checkbox.checked);
       updateInstallButton();
@@ -291,7 +229,6 @@
     modList.appendChild(item);
   });
 
-  // Карусельна логіка
   let currentIndex = 0;
   const visibleMods = 4;
 
@@ -302,13 +239,13 @@
     nextBtn.disabled = currentIndex >= mods.length - visibleMods;
   }
 
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    if(currentIndex > 0) currentIndex--;
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) currentIndex--;
     updateCarousel();
   });
 
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    if(currentIndex < mods.length - visibleMods) currentIndex++;
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < mods.length - visibleMods) currentIndex++;
     updateCarousel();
   });
 
@@ -319,26 +256,30 @@
     installBtn.disabled = !anySelected;
   }
 
-  // Імітація інсталяції
   installBtn.addEventListener('click', () => {
+    // Заблокуємо кнопку і чекбокси
     installBtn.disabled = true;
+    document.querySelectorAll('.checkbox').forEach(cb => cb.disabled = true);
+    
     loading.style.display = 'flex';
+    openBtn.style.display = 'none'; // ховаємо кнопку до завершення
+
     let progress = 0;
     progressFill.style.width = '0%';
 
     const interval = setInterval(() => {
       progress += 10;
       progressFill.style.width = progress + '%';
-      if(progress >= 100) {
+      if (progress >= 100) {
         clearInterval(interval);
+        openBtn.style.display = 'inline-block'; // показуємо кнопку після завершення
       }
     }, 300);
   });
 
-  function openMinecraft() {
-    alert('Minecraft opened! Enjoy your mods!');
-  }
-
+  openBtn.addEventListener('click', () => {
+    // Тут можна додати код для відкриття Minecraft або редиректу
+  });
 </script>
 
 </body>
