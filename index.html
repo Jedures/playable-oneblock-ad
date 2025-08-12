@@ -1,309 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cool Minecraft Mods Player</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    overflow-x: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+  <title>One Block Mods</title>
+  <style>
+    @font-face {
+      font-family: 'PressStart2P';
+    }
 
-  h1 {
-    margin-bottom: 20px;
-  }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'PressStart2P', sans-serif;
+      background-size: cover;
+      overflow-x: hidden;
+      background: #000; /* повернув темний фон */
+      color: white;
+    }
 
-  .carousel-container {
-    width: 520px;
-    margin: 0 auto 20px;
-    position: relative;
-  }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      padding: 20px;
+    }
 
-  .carousel {
-    display: flex;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 2px solid #333;
-    background: #222;
-  }
+    h1 {
+      color: #0f0;
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #000;
+      text-align: center;
+      user-select: none;
+    }
 
-  #modList {
-    display: flex;
-    transition: transform 0.4s ease;
-    will-change: transform;
-  }
+    .carousel-wrapper {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      margin-bottom: 20px;
+    }
 
-  .mod-item {
-    flex: 0 0 120px;
-    background: #222;
-    border-radius: 12px;
-    padding: 12px;
-    box-sizing: border-box;
-    user-select: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: box-shadow 0.3s ease;
-    position: relative;
-    margin: 0 8px;
-  }
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 2px solid #555;
+      background: rgba(0, 0, 0, 0.6);
+    }
 
-  .mod-item.selected {
-    box-shadow: 0 0 12px 3px #0f0;
-  }
+    #modList {
+      display: flex;
+      transition: transform 0.5s ease;
+      will-change: transform;
+      padding: 10px 0;
+    }
 
-  .mod-item div {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 0 4px currentColor);
-  }
+    .mod-item {
+      flex: 0 0 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 8px;
+      user-select: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 8px 4px;
+      font-size: 10px;
+      color: #ccc;
+      transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
 
-  .mod-label {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
+    .mod-item.selected {
+      border-color: #0f0;
+      color: #0f0;
+      box-shadow: 0 0 8px 2px #0f0;
+    }
 
-  .checkbox {
-    width: 20px;
-    height: 20px;
-  }
+    .mod-item div.img-placeholder {
+      width: 60px;
+      height: 60px;
+      background-color: #222;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 3px currentColor);
+    }
 
-  #prevBtn, #nextBtn {
-    background: #222;
-    border: none;
-    color: white;
-    font-size: 30px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    user-select: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
+    .mod-item input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0f0;
+      pointer-events: auto;
+    }
 
-  #prevBtn:disabled, #nextBtn:disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
+    #prevBtn, #nextBtn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #555;
+      border-radius: 6px;
+      color: #0f0;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 28px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
+    }
 
-  #prevBtn {
-    left: -50px;
-  }
+    #prevBtn {
+      left: -44px;
+    }
 
-  #nextBtn {
-    right: -50px;
-  }
+    #nextBtn {
+      right: -44px;
+    }
 
-  #installBtn {
-    background: #0a0;
-    border: none;
-    padding: 14px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    color: black;
-    margin-bottom: 20px;
-  }
+    #prevBtn:disabled, #nextBtn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
 
-  #installBtn:disabled {
-    background: #444;
-    cursor: default;
-    color: #999;
-  }
+    #installBtn {
+      font-family: 'PressStart2P', sans-serif;
+      font-size: 10px;
+      padding: 12px 24px;
+      background: #00aa00;
+      border: 2px solid #003300;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
 
-  #loading {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-  }
+    #installBtn:disabled {
+      background: #444;
+      border-color: #222;
+      cursor: not-allowed;
+      color: #888;
+    }
 
-  .progress-bar {
-    width: 520px;
-    height: 24px;
-    background: #222;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    position: relative;
-  }
+    #loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+    }
 
-  .progress-fill {
-    height: 100%;
-    width: 0%;
-    background: #0f0;
-    transition: width 0.3s ease;
-  }
+    .bar {
+      width: 100%;
+      height: 20px;
+      background: #000;
+      border: 2px solid #555;
+      margin-top: 20px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
 
-  #openBtn {
-    display: none;
-    background: #0f0;
-    border: none;
-    padding: 14px 36px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 14px;
-    cursor: pointer;
-    color: black;
-    box-shadow: 0 0 15px #0f0;
-    user-select: none;
-    text-transform: uppercase;
-    animation: pulse 1.2s infinite;
-    margin-top: 10px; /* Зсув вниз від прогрес-бару */
-  }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: #0c0;
+      transition: width 0.3s linear;
+    }
 
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
-  }
-</style>
+    #openBtn {
+      margin-top: 16px;
+      font-family: 'PressStart2P', sans-serif;
+      font-size: 12px;
+      padding: 12px 28px;
+      background: #ff0000;
+      border: 2px solid #660000;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      text-transform: uppercase;
+      display: none;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <h1>Select Your Mods</h1>
 
-<h1>Choose Your Minecraft Mods</h1>
-
-<div class="carousel-container">
-  <button id="prevBtn" aria-label="Previous mods">&lt;</button>
-  <div class="carousel">
-    <div id="modList"></div>
+  <div class="carousel-wrapper">
+    <button id="prevBtn" aria-label="Previous mods">&lt;</button>
+    <div class="carousel">
+      <div id="modList"></div>
+    </div>
+    <button id="nextBtn" aria-label="Next mods">&gt;</button>
   </div>
-  <button id="nextBtn" aria-label="Next mods">&gt;</button>
-</div>
 
-<button id="installBtn" disabled>Install Selected Mods</button>
+  <button id="installBtn" disabled>Install Selected Mods</button>
 
-<div id="loading">
-  <h2>Installing Mods...</h2>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
+  <div id="loading">
+    <h1>Installing...</h1>
+    <div class="bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+    <button id="openBtn">Open in Minecraft</button>
   </div>
-  <button id="openBtn">Open Minecraft</button>
-</div>
 
-<script>
-  const mods = [
-    { id: 'm1', name: 'One Block', color: '#00ff00' },
-    { id: 'm2', name: 'Lucky Block', color: '#ffcc00' },
-    { id: 'm3', name: 'SkyBlock', color: '#00ccff' },
-    { id: 'm4', name: 'Furniture Mod', color: '#cc5500' },
-    { id: 'm5', name: 'Magic Tools', color: '#9900ff' },
-    { id: 'm6', name: 'Biomes O\' Plenty', color: '#ff0044' },
-    { id: 'm7', name: 'Animal Bikes', color: '#ff7700' },
-    { id: 'm8', name: 'Realistic Terrain', color: '#007700' },
-    { id: 'm9', name: 'IndustrialCraft', color: '#0066cc' },
-    { id: 'm10', name: 'Pixelmon', color: '#cc0066' },
-  ];
+  <script>
+    const mods = [
+      { id: 'm1', name: 'One Block', color: '#00ff00' },
+      { id: 'm2', name: 'Lucky Block', color: '#ffcc00' },
+      { id: 'm3', name: 'SkyBlock', color: '#00ccff' },
+      { id: 'm4', name: 'Furniture Mod', color: '#cc5500' },
+      { id: 'm5', name: 'Magic Tools', color: '#9900ff' },
+      { id: 'm6', name: 'Biomes O\' Plenty', color: '#ff0044' },
+      { id: 'm7', name: 'Animal Bikes', color: '#ff7700' },
+      { id: 'm8', name: 'Realistic Terrain', color: '#007700' },
+    ];
 
-  const modList = document.getElementById('modList');
-  const installBtn = document.getElementById('installBtn');
-  const loading = document.getElementById('loading');
-  const progressFill = document.getElementById('progressFill');
-  const openBtn = document.getElementById('openBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
+    const modList = document.getElementById('modList');
+    const installBtn = document.getElementById('installBtn');
+    const loading = document.getElementById('loading');
+    const progressBar = document.getElementById('progressBar');
+    const openBtn = document.getElementById('openBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-  mods.forEach(mod => {
-    const item = document.createElement('div');
-    item.classList.add('mod-item');
-    item.dataset.id = mod.id;
-    item.style.color = mod.color;
+    // Створення модів
+    mods.forEach(mod => {
+      const item = document.createElement('div');
+      item.className = 'mod-item';
+      item.dataset.id = mod.id;
 
-    const img = document.createElement('div');
-    img.style.backgroundColor = mod.color;
-    item.appendChild(img);
+      const imgPlaceholder = document.createElement('div');
+      imgPlaceholder.className = 'img-placeholder';
+      imgPlaceholder.style.backgroundColor = mod.color;
+      item.appendChild(imgPlaceholder);
 
-    const label = document.createElement('div');
-    label.classList.add('mod-label');
-    label.textContent = mod.name;
-    item.appendChild(label);
+      const label = document.createElement('div');
+      label.textContent = mod.name;
+      item.appendChild(label);
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.classList.add('checkbox');
-    checkbox.setAttribute('aria-label', 'Select mod ' + mod.name);
-    item.appendChild(checkbox);
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.style.marginTop = '6px';
+      item.appendChild(checkbox);
 
-    item.addEventListener('click', e => {
-      if (e.target.tagName !== 'INPUT' && !checkbox.disabled) {
-        checkbox.checked = !checkbox.checked;
-        checkbox.dispatchEvent(new Event('change'));
-      }
+      item.addEventListener('click', e => {
+        if (e.target.tagName !== 'INPUT' && !checkbox.disabled) {
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
+
+      checkbox.addEventListener('change', () => {
+        item.classList.toggle('selected', checkbox.checked);
+        updateInstallButton();
+      });
+
+      modList.appendChild(item);
     });
 
-    checkbox.addEventListener('change', () => {
-      item.classList.toggle('selected', checkbox.checked);
-      updateInstallButton();
+    let currentIndex = 0;
+    const visibleMods = 4;
+    const modWidth = 90 + 16; // item width + margin left + right (8+8)
+
+    function updateCarousel() {
+      const maxIndex = mods.length - visibleMods;
+      if (currentIndex < 0) currentIndex = 0;
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      modList.style.transform = `translateX(${-currentIndex * modWidth}px)`;
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex--;
+      updateCarousel();
     });
 
-    modList.appendChild(item);
-  });
+    nextBtn.addEventListener('click', () => {
+      currentIndex++;
+      updateCarousel();
+    });
 
-  let currentIndex = 0;
-  const visibleMods = 4;
-  const modWidth = 120 + 16; // ширина + margin (8*2)
-
-  function updateCarousel() {
-    const maxIndex = mods.length - visibleMods;
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
-    const translateX = -(currentIndex * modWidth);
-    modList.style.transform = `translateX(${translateX}px)`;
-    prevBtn.disabled = currentIndex <= 0;
-    nextBtn.disabled = currentIndex >= maxIndex;
-  }
-
-  prevBtn.addEventListener('click', () => {
-    currentIndex--;
     updateCarousel();
-  });
 
-  nextBtn.addEventListener('click', () => {
-    currentIndex++;
-    updateCarousel();
-  });
+    function updateInstallButton() {
+      const anyChecked = [...document.querySelectorAll('.mod-item input[type=checkbox]')].some(cb => cb.checked);
+      installBtn.disabled = !anyChecked;
+    }
 
-  updateCarousel();
+    installBtn.addEventListener('click', () => {
+      installBtn.disabled = true;
+      document.querySelectorAll('.mod-item input[type=checkbox]').forEach(cb => cb.disabled = true);
 
-  function updateInstallButton() {
-    const anySelected = [...document.querySelectorAll('.checkbox')].some(c => c.checked);
-    installBtn.disabled = !anySelected;
-  }
+      loading.style.display = 'flex';
+      openBtn.style.display = 'none';
 
-  installBtn.addEventListener('click', () => {
-    installBtn.disabled = true;
-    document.querySelectorAll('.checkbox').forEach(cb => cb.disabled = true);
+      let progress = 0;
+      progressBar.style.width = '0%';
 
-    loading.style.display = 'flex';
-    openBtn.style.display = 'none'; // ховаємо кнопку
+      const interval = setInterval(() => {
+        progress += 5;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+          clearInterval(interval);
+          openBtn.style.display = 'inline-block';
+        }
+      }, 150);
+    });
 
-    let progress = 0;
-    progressFill.style.width = '0%';
-
-    const interval = setInterval(() => {
-      progress += 10;
-      progressFill.style.width = progress + '%';
-      if (progress >= 100) {
-        clearInterval(interval);
-        openBtn.style.display = 'inline-block';
-      }
-    }, 300);
-  });
-
-  openBtn.addEventListener('click', () => {
-    // Тут можна відкрити Minecraft або редирект
-  });
-</script>
-
+    openBtn.addEventListener('click', () => {
+      window.open('https://play.google.com/store/apps/details?id=com.game.mcpe.mods.oneblock', '_blank');
+    });
+  </script>
 </body>
+
 </html>
